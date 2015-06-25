@@ -4,6 +4,7 @@ import bldutil
 
 progs = '''
 tnsconv
+awesgvxvzpp
 '''
 
 pyprogs='''
@@ -32,7 +33,8 @@ dynpre = env.get('DYNLIB','')
 env.Prepend(CPPPATH=['../../include'],
 	    LIBPATH=['../../lib'],
 	    LIBS=[dynpre+'rsfpwd',
-		  dynpre+'rsf', dynpre+'rsfplot'])
+		  dynpre+'rsf', dynpre+'rsfplot',
+                  dynpre+'su'])
 
 for source in src:
 	inc = env.RSF_Include(source,prefix='')
@@ -105,3 +107,4 @@ if root:
 	env.Depends(docs,'#/framework/rsf/doc.py')	
 	doc = env.RSF_Docmerge(main,docs)
 	env.Install(pkgdir,doc)
+
