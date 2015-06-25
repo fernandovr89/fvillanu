@@ -457,7 +457,7 @@ if (is2D){
     if(nf==1 || nf==3) ww = sf_floatalloc(ns); /*source term array allocation */
     if(nf==2 || nf>3) sf_error("The source file does not have the correct dimensions");
     
-    dd = sf_floatalloc(nr);
+    dd = sf_floatalloc(nr*nf);
 
     /*------------------------------------------------------------*/
     /* setup source/receiver coordinates */
@@ -715,13 +715,15 @@ if (is2D){
 	} /* end free surface boundary conditions */
 
 	/* extract data */
-	lint2d_extract(u,dd,cr);
+	lint2d_extract(u,&(dd[nr*0]),cr);
+	lint2d_extract(vz,&(dd[nr*1]),cr);
+	lint2d_extract(vx,&(dd[nr*2]),cr);
 
 	if(snap && it%jsnap==0) {
 	    cut2d(u,uc,fdm,acz,acx);
 	    sf_floatwrite(uc[0],sf_n(acz)*sf_n(acx),Fwfl);
 	}
-	if(        it%jdata==0) sf_floatwrite(dd,nr,Fdat);
+	if(        it%jdata==0) sf_floatwrite(dd,nr*nf,Fdat);
 
 
     /*------------------------------------------------------------*/
