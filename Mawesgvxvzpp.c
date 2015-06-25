@@ -416,13 +416,12 @@ if (is2D){
 
     /* setup output data header */
     sf_oaxa(Fdat,ar,1);
-
-    sf_setn(at,nt/jdata);
-    sf_setd(at,dt*jdata);
-    sf_oaxa(Fdat,at,2);
     sf_setn(af,nf);
     sf_setd(af,1);
-    sf_oaxa(Fdat,af,3);    
+    sf_oaxa(Fdat,af,2);    
+    sf_setn(at,nt/jdata);
+    sf_setd(at,dt*jdata);
+    sf_oaxa(Fdat,at,3);
 
     /* setup output wavefield header */
     if(snap) {
@@ -454,8 +453,8 @@ if (is2D){
 
 
     /* Check the source file dimensions for defining the type of source*/
-    if(nf==1 || nf==3) ww = sf_floatalloc(ns); /*source term array allocation */
-    if(nf==2 || nf>3) sf_error("The source file does not have the correct dimensions");
+    if(nf==3) ww = sf_floatalloc(ns); /*source term array allocation */
+    if( nf!=3) sf_error("The source file does not have the correct dimensions. Must be 3 to save velocity and pressure components");
     
     dd = sf_floatalloc(nr*nf);
 
@@ -716,14 +715,17 @@ if (is2D){
 
 	/* extract data */
 	lint2d_extract(u,&(dd[nr*0]),cr);
-	lint2d_extract(vz,&(dd[nr*1]),cr);
+	lint2d_extract(vz,&(dd[nr*1]),cr); 
 	lint2d_extract(vx,&(dd[nr*2]),cr);
 
 	if(snap && it%jsnap==0) {
 	    cut2d(u,uc,fdm,acz,acx);
 	    sf_floatwrite(uc[0],sf_n(acz)*sf_n(acx),Fwfl);
 	}
-	if(        it%jdata==0) sf_floatwrite(dd,nr*nf,Fdat);
+	if(        it%jdata==0){ 
+            sf_floatwrite(dd,nr*nf,Fdat);
+
+        }
 
 
     /*------------------------------------------------------------*/
