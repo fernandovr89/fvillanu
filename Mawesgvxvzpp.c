@@ -420,7 +420,7 @@ if (is2D){
     sf_setn(at,nt/jdata);
     sf_setd(at,dt*jdata);
     sf_oaxa(Fdat,at,2);
-    sf_setn(af,1);
+    sf_setn(af,nf);
     sf_setd(af,1);
     sf_oaxa(Fdat,af,3);    
 
