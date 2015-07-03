@@ -5,6 +5,9 @@ import bldutil
 progs = '''
 tnsconv
 awesgvxvzpp
+nan2value
+lpf
+reshape
 '''
 
 pyprogs='''
